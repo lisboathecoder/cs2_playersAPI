@@ -4,10 +4,21 @@ const { players } = dados
 
 const getAllPlayers = (req,res) => {
     const resultado = players;
-        const { nick, nome, time, funcao, nacionalidade, ranking_hltv  } = req.query;
+        const { nick, nome, time, funcao, nacionalidade, ranking_hltv, sort } = req.query;
+
+  if (sort === "ranking_asc") {
+    // menor topo (1) → maior (70)
+    resultado.sort((a, b) => a.ranking_hltv - b.ranking_hltv);
+     res.json(resultado);
+  } else if (sort === "ranking_desc") {
+    // maior (70) → menor (1)
+    resultado.sort((a, b) => b.ranking_hltv - a.ranking_hltv);
+     res.json(resultado):
+  }
 
     if(nick){
         resultado = resultado.filter(p => p.nick.toLowerCase().includes(nick.toLowerCase()));
+    return res.json(resultado);
     };
 
     if(nacionalidade) {
